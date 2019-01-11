@@ -1,7 +1,6 @@
-package ${package}.${moduleName}.dao;
+package ${package}.${moduleName}.mapper;
 
-import ${package}.${moduleName}.entity.${className}Entity;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import ${mainPath}.spi.${moduleName}.${className};
 
 /**
  * ${comments}
@@ -10,6 +9,6 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @email ${email}
  * @date ${datetime}
  */
-public interface ${className}Dao extends BaseMapper<${className}Entity> {
+public interface ${className}Mapper extends IBaseMapper<${className}> {
 	
 }

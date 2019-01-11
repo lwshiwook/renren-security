@@ -1,7 +1,4 @@
-package ${package}.${moduleName}.entity;
-
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
+package ${mainPath}.spi.${moduleName};
 
 #if(${hasBigDecimal})
 import java.math.BigDecimal;
@@ -16,17 +13,13 @@ import java.util.Date;
  * @email ${email}
  * @date ${datetime}
  */
-@TableName("${tableName}")
-public class ${className}Entity implements Serializable {
+public class ${className} implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 #foreach ($column in $columns)
 	/**
 	 * $column.comments
 	 */
-	#if($column.columnName == $pk.columnName)
-@TableId
-	#end
 private $column.attrType $column.attrname;
 #end
 

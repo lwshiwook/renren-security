@@ -1,14 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="${package}.${moduleName}.dao.${className}Dao">
+<mapper namespace="${package}.${moduleName}.mapper.${className}Mapper">
 
-	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="${package}.${moduleName}.entity.${className}Entity" id="${classname}Map">
+	<!-- 这部分目前缺失select列表和通用查询（以及batch操作？），后续补充 -->
+    <resultMap id="${classname}ResultMap" type="${mainPath}.spi.${moduleName}.${className}">
 #foreach($column in $columns)
-        <result property="${column.attrname}" column="${column.columnName}"/>
+        <result property="${column.attrname}" jdbcType="${column.dataType}" column="${column.columnName}"/>
 #end
     </resultMap>
-
+    
+  <sql id="Base_Column_List">
+#foreach($column in $columns)
+    ${column.columnName}#if($foreach.hasNext),#end
+#end    
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="${classname}ResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ${tableName}
+    where ${pk.columnName} = #{${pk.columnName},jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ${tableName}
+    where ${pk.columnName} = #{${pk.columnName},jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="${mainPath}.spi.${moduleName}.${className}">
+    insert into ${tableName} (
+#foreach($column in $columns)
+    ${column.columnName}#if($foreach.hasNext),#end
+#end)
+    values (
+#foreach($column in $columns)
+    #{${column.columnName},jdbcType=${column.dataType}}#if($foreach.hasNext),#end
+#end)
+  </insert>
+  
+  <insert id="insertSelective" parameterType="${mainPath}.spi.${moduleName}.${className}">
+    insert into ${tableName}
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+#foreach($column in $columns)
+    <if test="${column.columnName} != null">
+        ${column.columnName}
+    </if>
+#end    
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+#foreach($column in $columns)
+    <if test="${column.columnName} != null">
+        #{${column.columnName},jdbcType=${column.dataType}},
+    </if>
+#end
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="${mainPath}.spi.${moduleName}.${className}">
+    update ${tableName}
+    <set>
+#foreach($column in $columns)
+    <if test="${column.columnName} != null">
+        ${column.columnName} = #{${column.columnName},jdbcType=${column.dataType}},
+    </if>
+#end
+    </set>
+    where ${pk.columnName} = #{${pk.columnName},jdbcType=${pk.dataType}}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="${mainPath}.spi.${moduleName}.${className}">
+    update ${tableName}
+    set 
+#foreach($column in $columns)
+        ${column.columnName} = #{${column.columnName},jdbcType=${column.dataType}},
+#end
+    where ${pk.columnName} = #{${pk.columnName},jdbcType=${pk.dataType}}
+  </update>
 
 </mapper>

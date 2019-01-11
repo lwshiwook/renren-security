@@ -2,28 +2,27 @@ package ${package}.${moduleName}.service.impl;
 
 import org.springframework.stereotype.Service;
 import java.util.Map;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import ${mainPath}.common.utils.PageUtils;
-import ${mainPath}.common.utils.Query;
 
-import ${package}.${moduleName}.dao.${className}Dao;
-import ${package}.${moduleName}.entity.${className}Entity;
+import ${package}.${moduleName}.mapper.${className}Mapper;
 import ${package}.${moduleName}.service.${className}Service;
+import ${package}.${moduleName}.utils.PageDataUtils;
+import ${package}.${moduleName}.model.qo.QueryPage;
+import ${mainPath}.spi.${moduleName}.${className};
+import ${mainPath}.vo.PageData;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 
 @Service("${classname}Service")
-public class ${className}ServiceImpl extends ServiceImpl<${className}Dao, ${className}Entity> implements ${className}Service {
+public class ${className}ServiceImpl extends BaseServiceImpl<${className}Mapper, ${className}> implements ${className}Service {
 
     @Override
-    public PageUtils queryPage(Map<String, Object> params) {
-        Page<${className}Entity> page = this.selectPage(
-                new Query<${className}Entity>(params).getPage(),
-                new EntityWrapper<${className}Entity>()
-        );
-
-        return new PageUtils(page);
+    public PageData<${className}> queryPage(QueryPage pageObj) {
+    
+        Page<${className}> page = PageHelper.startPage(pageObj.getPageNum(), pageObj.getPageSize());
+        // TODO 自己写条件筛选的实现
+        return PageDataUtils.buildPageData(page);
     }
 
 }

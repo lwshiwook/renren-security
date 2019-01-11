@@ -1,8 +1,12 @@
 package ${package}.${moduleName}.service;
 
-import com.baomidou.mybatisplus.service.IService;
-import ${mainPath}.common.utils.PageUtils;
-import ${package}.${moduleName}.entity.${className}Entity;
+import ${package}.${moduleName}.service.IBaseService;
+import ${package}.${moduleName}.utils.PageDataUtils;
+import ${mainPath}.spi.${moduleName}.${className};
+import ${mainPath}.vo.PageData;
+import ${package}.${moduleName}.model.qo.QueryPage;
+
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -13,8 +17,8 @@ import java.util.Map;
  * @email ${email}
  * @date ${datetime}
  */
-public interface ${className}Service extends IService<${className}Entity> {
+public interface ${className}Service extends IBaseService<${className}> {
 
-    PageUtils queryPage(Map<String, Object> params);
+    PageData<${className}> queryPage(QueryPage pageObj);
 }
 
