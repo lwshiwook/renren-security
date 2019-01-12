@@ -18,15 +18,20 @@ package io.renren.utils;
 
 import io.renren.entity.ColumnEntity;
 import io.renren.entity.TableEntity;
+
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
+import org.apache.ibatis.type.JdbcType;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+
+import cn.hutool.core.util.StrUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -80,7 +85,12 @@ public class GenUtils {
 		for(Map<String, String> column : columns){
 			ColumnEntity columnEntity = new ColumnEntity();
 			columnEntity.setColumnName(column.get("columnName"));
-			columnEntity.setDataType(column.get("dataType"));
+			
+			String dataType = column.get("dataType");
+			if(dataType.equals("datetime")) {
+			    dataType = JdbcType.TIMESTAMP.toString().toLowerCase();
+			}
+			columnEntity.setDataType(dataType);
 			columnEntity.setComments(column.get("columnComment"));
 			columnEntity.setExtra(column.get("extra"));
 			
@@ -124,7 +134,7 @@ public class GenUtils {
 		map.put("pk", tableEntity.getPk());
 		map.put("className", tableEntity.getClassName());
 		map.put("classname", tableEntity.getClassname());
-		map.put("pathName", tableEntity.getClassname().toLowerCase());
+		map.put("pathName", StrUtil.toCamelCase(tableEntity.getClassname()));
 		map.put("columns", tableEntity.getColumns());
 		map.put("hasBigDecimal", hasBigDecimal);
 		map.put("mainPath", mainPath);

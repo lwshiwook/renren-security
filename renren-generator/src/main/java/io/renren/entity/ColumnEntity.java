@@ -12,6 +12,8 @@ public class ColumnEntity {
     private String columnName;
     //列名类型
     private String dataType;
+    //列名类型
+    private String dataTypeUpper;
     //列名备注
     private String comments;
     
@@ -33,8 +35,9 @@ public class ColumnEntity {
 	public String getDataType() {
 		return dataType;
 	}
-	public void setDataType(String dataType) {
+	public void setDataType(String dataType) { 
 		this.dataType = dataType;
+		this.dataTypeUpper = dataType.toUpperCase();
 	}
 	public String getComments() {
 		return comments;
@@ -66,4 +69,11 @@ public class ColumnEntity {
 	public void setExtra(String extra) {
 		this.extra = extra;
 	}
+    public String getDataTypeUpper() {
+        return dataTypeUpper;
+    }
+    public void setDataTypeUpper(String dataTypeUpper) {
+        this.dataTypeUpper = dataTypeUpper;
+    }
+    
 }

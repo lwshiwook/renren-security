@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 import ${mainPath}.spi.${moduleName}.${className};
-import ${mainPath}.spi.${moduleName}.model.qo.QueryPage;
+import ${package}.${moduleName}.model.qo.QueryPage;
 import ${package}.${moduleName}.service.${className}Service;
 import ${mainPath}.vo.PageData;
 import ${mainPath}.vo.JsonResult;
@@ -48,7 +48,7 @@ public class ${className}Controller {
      */
     @PostMapping("/list")
     @ApiOperation(value = "${comments}列表", tags = "${comments}相关", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public JsonResult<PageData<${className}>> list(@RequestParam QueryPage queryObj){
+    public JsonResult<PageData<${className}>> list(@RequestBody QueryPage queryObj){
         //TODO 这里应该自己继承QueryPage实现一个查询条件的bean,替换上面一行中的QueryPage
         PageData<${className}> page = ${classname}Service.queryPage(queryObj);
         return JsonResult.ok(page);
@@ -69,7 +69,7 @@ public class ${className}Controller {
      * 保存
      */
     @PostMapping
-    @ApiOperation(value = "修改${comments}信息", tags = "${comments}相关", notes = "逻辑删除请更新deleted字段为1", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "新增${comments}信息", tags = "${comments}相关", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JsonResult<${className}> save(@RequestBody @Valid ${className} ${classname}){
         ${classname}Service.insertSelective(${classname});
         return JsonResult.ok(${classname});
@@ -79,18 +79,9 @@ public class ${className}Controller {
      * 修改
      */
     @PatchMapping("/update")
-    @ApiOperation(value = "新增${comments}", tags = "${comments}相关", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "修改${comments}", tags = "${comments}相关",  notes = "逻辑删除请更新deleted字段为1", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JsonResult<?> update(@RequestBody @Valid ${className} ${classname}){
         ${classname}Service.updateSelectiveById(${classname});
-        return JsonResult.ok();
-    }
-
-    /**
-     * 删除
-     */
-    @DeleteMapping("/delete")
-    public JsonResult<?> delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
-        // not impl for now
         return JsonResult.ok();
     }
 
