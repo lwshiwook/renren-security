@@ -90,6 +90,9 @@ public class GenUtils {
 			if(dataType.equals("datetime")) {
 			    dataType = JdbcType.TIMESTAMP.toString().toLowerCase();
 			}
+			if(dataType.equals("int")) {
+                dataType = config.getString(column.get("dataType"), "unknowType").toLowerCase();
+            }
 			columnEntity.setDataType(dataType);
 			columnEntity.setComments(column.get("columnComment"));
 			columnEntity.setExtra(column.get("extra"));
@@ -101,6 +104,9 @@ public class GenUtils {
 			
 			//列的数据类型，转换成Java类型
 			String attrType = config.getString(columnEntity.getDataType(), "unknowType");
+			
+			
+			
 			columnEntity.setAttrType(attrType);
 			if (!hasBigDecimal && attrType.equals("BigDecimal" )) {
 				hasBigDecimal = true;
