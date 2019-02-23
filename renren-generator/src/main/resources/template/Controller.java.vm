@@ -78,7 +78,7 @@ public class ${className}Controller {
     /**
      * 修改
      */
-    @PatchMapping("/update")
+    @PatchMapping
     @ApiOperation(value = "修改${comments}", tags = "${comments}相关",  notes = "逻辑删除请更新deleted字段为1", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JsonResult<?> update(@RequestBody @Valid ${className} ${classname}){
         ${classname}Service.updateSelectiveById(${classname});
