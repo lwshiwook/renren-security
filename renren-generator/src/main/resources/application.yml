@@ -9,9 +9,9 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     #MySQL配置
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://47.92.207.20:3306/river_chief_db?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    username: pro_yunli_river
-    password: 123asd
+    url: jdbc:mysql://localhost:3306/bzb_test?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: root
     #oracle配置
 #    driverClassName: oracle.jdbc.OracleDriver
 #    url: jdbc:oracle:thin:@192.168.10.10:1521:helowin
